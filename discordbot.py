@@ -1,12 +1,13 @@
 from discord.ext import commands
 import discord
 import os
+import asyncio
 import traceback
 from schedule import show_schedule
 
 bot = commands.Bot(command_prefix='/')
-token = os.environ['DISCORD_BOT_TOKEN']
-
+# token = os.environ['DISCORD_BOT_TOKEN']
+token = 'ODAxODI5NzI0MTk1MjU4NDI5.YAmYHw.LLO5fQ029UQBbMwTTnuhW6vMy1M'
 client = discord.Client()
 
 @bot.event
@@ -28,9 +29,10 @@ async def schedule(ctx):
 
 @bot.command()
 async def testing(ctx):
-    channel = bot.get_channel(365144324364828677)
-    message = channel.fetch_message(801838502387646546)
-    message.edit(content="newcontent")
+    channel = bot.get_channel(477180851994624000)
+    message = await channel.fetch_message(801855318970859572)
+    pushmsg = show_schedule()
+    await message.edit(content=pushmsg)
 
 
 bot.run(token)
