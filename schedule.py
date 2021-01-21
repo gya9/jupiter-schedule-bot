@@ -42,34 +42,40 @@ def show_schedule():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # Call the Calendar API
-    # now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    tommorow = datetime.datetime.utcnow() + datetime.timedelta(days = 1)
-    start = tommorow.replace(hour=0, minute=0, second=0, microsecond=0).isoformat() + 'Z'
-    end = tommorow.replace(hour=23, minute=59, second=0, microsecond=0).isoformat() + 'Z'
-    # print('Getting the upcoming 10 events')
+    pushtext = ''
+    w_list = ['月', '火', '水', '木', '金', '土', '日']
 
-    events_result = service.events().list(calendarId='nl0d8pbk4spklbp2r4r7tbsglg@group.calendar.google.com', 
-                                        timeMin=start, timeMax=end,
-                                        maxResults=10, singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
+    for i in range(1, 4):
 
-    pushtext = '明日' + start[5:10] + 'の予定'
+        tommorow = datetime.datetime.utcnow() + datetime.timedelta(days = i)
+        start = tommorow.replace(hour=0, minute=0, second=0, microsecond=0).isoformat() + 'Z'
+        end = tommorow.replace(hour=23, minute=59, second=0, microsecond=0).isoformat() + 'Z'
 
-    if not events:
-        pushtext += '\n予定がありません'
-    for event in events:
-        if 'date' in event['start'].keys():
-            if event['start']['date'] == tommorow.strftime('%Y-%m-%d'):
-                pushtext += '\n[' + event['summary'] + ']'
-        
-        else:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            end = event['end'].get('dateTime', event['end'].get('date'))
-            pushtext += '\n' + start[11:16] + '~' + end[11:16] + ' ' + event['summary']
+        events_result = service.events().list(calendarId='nl0d8pbk4spklbp2r4r7tbsglg@group.calendar.google.com', 
+                                            timeMin=start, timeMax=end,
+                                            maxResults=10, singleEvents=True,
+                                            orderBy='startTime').execute()
+        events = events_result.get('items', [])
 
+        pushtext_tmp = '【' + str(int(start[5:7])) + '/' + str(int(start[8:10])) + '(' + w_list[tommorow.weekday()] + ')】'
+
+        if not events:
+            pushtext_tmp += '\n予定がありません'
+        for event in events:
+            if 'date' in event['start'].keys():
+                if event['start']['date'] == tommorow.strftime('%Y-%m-%d'):
+                    pushtext_tmp += '\n[' + event['summary'] + ']'
+            
+            else:
+                start = event['start'].get('dateTime', event['start'].get('date'))
+                end = event['end'].get('dateTime', event['end'].get('date'))
+                pushtext_tmp += '\n' + start[11:16] + '~' + end[11:16] + ' ' + event['summary']
+
+        pushtext += pushtext_tmp + '\n\n'
+
+    pushtext = pushtext[:-2]
+    print(pushtext)
     return pushtext
 
 if __name__ == "__main__":
-    main()
+    show_schedule()

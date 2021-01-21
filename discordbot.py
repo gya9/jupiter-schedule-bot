@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import os
 import traceback
 from schedule import show_schedule
@@ -6,6 +7,7 @@ from schedule import show_schedule
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
+client = discord.Client()
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -23,6 +25,12 @@ async def ping(ctx):
 async def schedule(ctx):
     msg = show_schedule()
     await ctx.send(msg)
+
+@bot.command()
+async def testing(ctx):
+    channel = client.get_channel(365144324364828677)
+    message = await channel.fetch_message(801838502387646546)
+    await message.edit(content="newcontent")
 
 
 bot.run(token)
