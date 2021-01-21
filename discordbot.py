@@ -6,9 +6,7 @@ import traceback
 from schedule import show_schedule
 
 bot = commands.Bot(command_prefix='/')
-# token = os.environ['DISCORD_BOT_TOKEN']
-token = 'ODAxODI5NzI0MTk1MjU4NDI5.YAmYHw.LLO5fQ029UQBbMwTTnuhW6vMy1M'
-client = discord.Client()
+token = os.environ['DISCORD_BOT_TOKEN']
 
 @bot.event
 async def on_command_error(ctx, error):
