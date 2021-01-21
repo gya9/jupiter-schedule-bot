@@ -28,8 +28,8 @@ async def schedule(ctx):
 
 @bot.command()
 async def testing(ctx):
-    channel = await bot.get_channel(365144324364828677)
-    message = await channel.fetch_message(801838502387646546)
+    channel = bot.get_channel(365144324364828677)
+    message = channel.fetch_message(801838502387646546)
     await message.edit(content="newcontent")
 
 
