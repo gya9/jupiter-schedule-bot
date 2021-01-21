@@ -20,7 +20,7 @@ async def ping(ctx):
 
 
 @bot.command()
-async def s(ctx):
+async def schedule(ctx):
     await show_schedule()
 
 
