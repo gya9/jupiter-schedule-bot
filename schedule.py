@@ -69,7 +69,7 @@ def show_schedule():
             end = event['end'].get('dateTime', event['end'].get('date'))
             pushtext += '\n' + start[11:16] + '~' + end[11:16] + ' ' + event['summary']
 
-    print(pushtext)
+    return pushtext
 
 if __name__ == "__main__":
     main()

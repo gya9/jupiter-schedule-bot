@@ -21,7 +21,8 @@ async def ping(ctx):
 
 @bot.command()
 async def schedule(ctx):
-    await show_schedule()
+    msg = show_schedule()
+    await ctx.send(msg)
 
 
 bot.run(token)
