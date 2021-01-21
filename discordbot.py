@@ -30,7 +30,7 @@ async def schedule(ctx):
 async def testing(ctx):
     channel = bot.get_channel(365144324364828677)
     message = channel.fetch_message(801838502387646546)
-    await message.edit(content="newcontent")
+    message.edit(content="newcontent")
 
 
 bot.run(token)
